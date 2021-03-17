@@ -1,3 +1,5 @@
 # Notes
 
-- export an aligned set via genbank xml from geneious
+- import from fasta files
+- expand the nucleotide mappings to include other things
+- 
