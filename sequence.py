@@ -7,12 +7,139 @@ base_pairs = ["-", "N", "W", "A", "T", "C", "G"]
 null_val = 9
 
 
-class Sequence(SeqIO):
-    def __init__(self):
-        super().__init__()
-        print(dir(self))
+def construct_numerization_dict():
+    """
+        mapping from base pairs to numbers
+    """
+    numerization_dict = {}
+    numerization_array = np.arange(len(base_pairs))
+    for i, bp in enumerate(base_pairs):
+        numerization_dict[bp] = numerization_array[i]
+    return numerization_dict
 
 
+def construct_binarization_dict():
+    """
+        mapping from base pairs to binary words
+    """
+    binarization_dict = {}
+    binarization_array = np.vstack(
+        [np.zeros(len(base_pairs) - 1),
+         np.eye(len(base_pairs) - 1)])
+    for i, bp in enumerate(base_pairs):
+        binarization_dict[bp] = binarization_array[i, :]
+    return binarization_dict
+
+
+NUMERIZATION_DICT = construct_numerization_dict()
+BINARIZATION_DICT = construct_binarization_dict()
+
+
+class SequenceCollection():
+    """
+        SequenceCollection is a list of
+        Sequences objects from a file
+        TODO
+        - add combining collections
+        - add multiple files
+        - check for multiple reference sequences
+    """
+    def __init__(self, filepath):
+        self.reference = None
+        self.collection = self.load_from_fasta()
+        self.bin_stack = self.stack_sequences("bin")
+        self.num_stack = self.stack_sequences("num")
+        self.seq_stack = self.stack_sequences("seq")
+        self.mutation_stack = self.construct_mutation_stack(
+            self.num_stack, self.reference)
+
+    def load_from_fasta(self):
+        """
+        a dict {str: id : SeqRecord: record}
+            SeqRecord.seq
+            SeqRecord.id
+        """
+        collection = []
+        with open(filepath) as handle:
+            seq_dict = SeqIO.to_dict(SeqIO.parse(handle, "fasta"))
+        # collect sequences
+        for id in seq_dict.keys():
+            sequence = Sequence(id, seq_dict[id])
+            if "CAP" in id:
+                # sequence is reference AAV
+                self.reference = sequence
+            else:
+                collection.append(sequence)
+        return collection
+
+    def stack_sequences(self, type):
+        stack = []
+        for sequence in self.collection:
+            if type == "bin":
+                stack.append(sequence.bin)
+            elif type == "num":
+                stack.append(sequence.num)
+            elif type == "seq":
+                stack.append(sequence.seq)
+        return np.stack(stack)
+
+    @classmethod
+    def construct_mutation_stack(cls, stack, reference):
+        # subtraction yields 0s where sequence truly overlaps
+        diff = stack - reference.num
+        mutations_only = np.ones(diff.shape) * null_val
+        mutation_locs = np.argwhere(diff > 0)
+        for i, j in mutation_locs:
+            mutations_only[i, j] = stack[i, j]
+        return mutations_only
+
+
+class Sequence():
+    """
+    inputs:
+        id: string 
+        record: SeqRecord
+     
+    """
+    def __init__(self, id, record):
+        self.id = id
+        self.record = record  # SeqRecord object
+        self.seq = record.seq  # Seq object
+        self.bin = self.binarize(self.seq)
+        self.num = self.numerize(self.seq)
+
+    @classmethod
+    def binarize(cls, sequence):
+        """
+            add binary representation of Seq
+            using binarization_dict e.g.
+            A: 1000
+            T: 0100
+            C: 0010
+            G: 0001
+        """
+        binary_basepairs = []
+        for bp in sequence:
+            binary_basepairs.append(BINARIZATION_DICT[bp])
+        return np.hstack(binary_basepairs)
+
+    @classmethod
+    def numerize(cls, sequence):
+        """
+            add numerical representation of Seq 
+            using numerization dict e.g.
+            A: 1
+            T: 2
+            C: 3
+            G: 4
+        """
+        numerical_basepairs = []
+        for bp in sequence:
+            numerical_basepairs.append(NUMERIZATION_DICT[bp])
+        return np.array(numerical_basepairs)
+
+
+# not used for now
 def load_from_xml(filepath):
     output = {}
     tree = et.parse(filepath)
@@ -24,106 +151,17 @@ def load_from_xml(filepath):
     return output
 
 
-def binarize_sequence(sequence):
-    binary_basepairs = []
-    for bp in sequence:
-        binary_basepairs.append(binarization_dict[bp])
-    return np.hstack(binary_basepairs)
-
-
-def numerize_sequence(sequence):
-    numerical_basepairs = []
-    for bp in sequence:
-        numerical_basepairs.append(numerization_dict[bp])
-    return np.array(numerical_basepairs)
-
-
-def load_from_fasta(filepath):
-    """
-        returns a dict {id : SeqRecord}
-        SeqRecord.seq
-        SeqRecord.id
-        ...
-    """
-    with open(filepath) as handle:
-        return SeqIO.to_dict(SeqIO.parse(handle, "fasta"))
-
-
-def construct_numerization_dict():
-    numerization_dict = {}
-    numerization_array = np.arange(len(base_pairs))
-    for i, bp in enumerate(base_pairs):
-        numerization_dict[bp] = numerization_array[i]
-    return numerization_dict
-
-
-def construct_binarization_dict():
-    binarization_dict = {}
-    binarization_array = np.vstack(
-        [np.zeros(len(base_pairs) - 1),
-         np.eye(len(base_pairs) - 1)])
-    for i, bp in enumerate(base_pairs):
-        binarization_dict[bp] = binarization_array[i, :]
-    return binarization_dict
-
-
-def construct_sequence_dict(seq_dict):
-    sequences = {}
-    reference_sequences = {}
-    for id in seq_dict.keys():
-        record = seq_dict[id]
-        if "CAP" in id:
-            print(id)
-            reference_sequences[id] = {}
-            reference_sequences[id]["seq"] = record.seq
-            reference_sequences[id]["bin"] = binarize_sequence(record.seq)
-            reference_sequences[id]["num"] = numerize_sequence(record.seq)
-        else:
-            sequences[id] = {}
-            sequences[id]["seq"] = record.seq
-            sequences[id]["bin"] = binarize_sequence(record.seq)
-            sequences[id]["num"] = numerize_sequence(record.seq)
-    return sequences, reference_sequences
-
-
-def stack_sequences(sequences, type="num"):
-    stack = []
-    for id in sequences.keys():
-        stack.append(sequences[id][type])
-    return np.stack(stack)
-
-
-binarization_dict = construct_binarization_dict()
-numerization_dict = construct_numerization_dict()
-
 folder = '/Users/spencerw/Dropbox (UCL)/Murray Lab/Geneious/Alba data example/'
-# filename = 'nucleotide_alignment.xml'
-# filepath = folder + filename
-
 fasta_filename = 'nucleotide_alignment.fasta'
 filepath = Path(folder + fasta_filename)
-seq_dict = load_from_fasta(filepath)
-print("Found %i records in file" % len(seq_dict.keys()))
+sc = SequenceCollection(filepath)
 
-sequences, reference_sequences = construct_sequence_dict(seq_dict)
-print(f"found {len(reference_sequences.keys())} reference sequences")
-print(f"found {len(sequences.keys())} experimental sequences")
+print(f"Found {len(sc.collection)} records in file")
+i = 33
+print(f"Sequence {i} contains {len(sc.collection[i].seq)} base pairs")
+print(f"Reference contains {len(sc.reference.seq)} base pairs")
 
-# converted sequences
-binary_stack = stack_sequences(sequences, type="bin")
-numerical_stack = stack_sequences(sequences, type="num")
-raw_stack = stack_sequences(sequences, type="seq")
-
-# visualizing mutations only
-viz_type = "num"
-reference = list(reference_sequences.values())[0][viz_type]
-# there are no zeros in the reference, only 3,4,5,6 == A,T,C,G
-stack = stack_sequences(sequences, type=viz_type)
-# subtraction yields 0s where sequence truly overlaps
-diff = stack - reference
-mutations_only = np.ones(diff.shape) * null_val
-mutation_locs = np.argwhere(diff > 0)
-for i, j in mutation_locs:
-    mutations_only[i, j] = stack[i, j]
-
-S = Sequence()
+print(f"Shape of binary stack {sc.bin_stack.shape}")
+print(f"Shape of numerary stack {sc.num_stack.shape}")
+print(f"Shape of raw stack {sc.seq_stack.shape}")
+print(f"Shape of mutation stack {sc.mutation_stack.shape}")
