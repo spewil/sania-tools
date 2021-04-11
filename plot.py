@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 from utils import plot
 import numpy as np
-matplotlib.use("TkAgg")
+matplotlib.use("MacOSX")
 
 from sequence import sc
 from pca import bin_projections, bin_components, num_projections, num_components, mut_projections
@@ -70,14 +70,15 @@ def plot_PC_projections(projections, title=None):
     ax.set_ylabel("PC 2")
     if title is not None:
         ax.set_title(title)
+    return fig, ax
 
 
 fig, ax = plot_sequence_stack(sc.mutation_stack)
 fig, ax = plot_sequence_stack(unique_mutations)
 
-# plot_PC_projections(bin_projections, title="binary")
-# plot_PC_projections(num_projections, title="numerical")
-# plot_PC_projections(mut_projections, title="mutations")
+plot_PC_projections(bin_projections, title="binary")
+plot_PC_projections(num_projections, title="numerical")
+plot_PC_projections(mut_projections, title="mutations")
 
 # fig, axes = plt.subplots(2, 1, figsize=(8, 8))
 # axes[0].imshow(unique_sequences, aspect="auto")

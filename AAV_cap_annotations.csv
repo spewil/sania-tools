@@ -1,0 +1,17 @@
+﻿Annotation,AA Start,AA End,DNA Start,DNA End,Notes
+F129L,129,129,385,387,"Designation AAV6 to AAV 6.2, 6.2 has greater tropism in some cell types"
+Surface Exposed Tyrosine,445,445,1333,1335,Shown to alter tropism
+Surface Serine,663,663,1987,1989,Shown to alter tropism
+Surface Exposed Tyrosine,731,731,2191,2193,Shown to alter tropism
+Heparin binding,531,531,1591,1593,Involved in heparin binding/tropism
+AAV I587 homolog,585,586,1755,1756,Homolog to AAV2 I587 peptide insertion site
+Surface lysine,492,492,1474,1476,Surface exposed lysine
+Variable Region 1,253,271,757,813,
+Variable Region 2,381,386,1141,1158,
+Variable Region 3,450,466,1348,1398,
+Variable Region 4,490,515,1468,1545,
+Variable Region 5,527,532,1579,1596,
+Variable Region 6,544,557,1630,1671,
+Variable Region 7,582,597,1744,1791,
+Variable Region 8,659,669,1975,2007,
+Variable Region 9,704,720,2125,2160,

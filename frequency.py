@@ -33,3 +33,9 @@ for word, count in sorted_words:
 unique_stack = np.stack(unique_sequences)
 unique_mutations = SequenceCollection.construct_mutation_stack(
     unique_stack, sc.reference)
+
+for i in range(5):
+    print(np.nonzero(unique_mutations[i] - 9)[0])
+    print([
+        unique_mutations[i, k] for k in np.nonzero(unique_mutations[i] - 9)[0]
+    ])

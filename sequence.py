@@ -151,7 +151,8 @@ def load_from_xml(filepath):
     return output
 
 
-folder = '/Users/spencerw/Dropbox (UCL)/Murray Lab/Geneious/Alba data example/'
+# folder = '/Users/spencerw/Dropbox (UCL)/Murray Lab/Geneious/Alba data example/'
+folder = "./"
 fasta_filename = 'nucleotide_alignment.fasta'
 filepath = Path(folder + fasta_filename)
 sc = SequenceCollection(filepath)

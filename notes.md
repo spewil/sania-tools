@@ -4,7 +4,6 @@
 - expand the nucleotide mappings to include other things
 
 Things to do:
-- apply regular PCA
-- try kernelPCA (which kernel?)
-- think about nucleotide encoding function (imaginary?)
-- code up categorial PCA (in same style as scikit learn)
+- visualize sequences more clearly
+  - check computing mutations
+- connect PCA plots to mutation plots
