@@ -1,6 +1,6 @@
 import numpy as np
 import xml.etree.ElementTree as et
-from Bio import SeqIO
+from Bio import SeqIO, SeqUtils, Data
 from pathlib import Path
 
 base_pairs = ["-", "N", "W", "A", "T", "C", "G"]
@@ -107,6 +107,10 @@ class Sequence():
         self.seq = record.seq  # Seq object
         self.bin = self.binarize(self.seq)
         self.num = self.numerize(self.seq)
+        try:
+            self.amino_acids = self.seq.translate()
+        except Data.CodonTable.TranslationError:
+            self.amino_acids = None
 
     @classmethod
     def binarize(cls, sequence):
@@ -152,16 +156,20 @@ def load_from_xml(filepath):
 
 
 # folder = '/Users/spencerw/Dropbox (UCL)/Murray Lab/Geneious/Alba data example/'
-folder = "./"
-fasta_filename = 'nucleotide_alignment.fasta'
-filepath = Path(folder + fasta_filename)
+folder = "data"
+fasta_filename = 'prelim_capsids.fasta'
+filepath = Path(folder) / Path(fasta_filename)
 sc = SequenceCollection(filepath)
 
 print(f"Found {len(sc.collection)} records in file")
-i = 33
+i = 31
 print(f"Sequence {i} contains {len(sc.collection[i].seq)} base pairs")
-print(f"Reference contains {len(sc.reference.seq)} base pairs")
+print(f"Sequence {i} contains {len(sc.collection[i].amino_acids)} amino acids")
 
+print(f"unique amino acids: {set(sc.collection[i].seq.translate())}")
+print(f"unique amino acids: {set(sc.collection[i].amino_acids)}")
+
+print(f"Reference contains {len(sc.reference.seq)} base pairs")
 print(f"Shape of binary stack {sc.bin_stack.shape}")
 print(f"Shape of numerary stack {sc.num_stack.shape}")
 print(f"Shape of raw stack {sc.seq_stack.shape}")
