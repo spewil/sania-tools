@@ -74,6 +74,7 @@ class SequenceCollection():
 
     def stack_sequences(self, type):
         stack = []
+        print(len(self.collection))
         for sequence in self.collection:
             if type == "bin":
                 stack.append(sequence.bin)
@@ -157,7 +158,8 @@ def load_from_xml(filepath):
 
 # folder = '/Users/spencerw/Dropbox (UCL)/Murray Lab/Geneious/Alba data example/'
 folder = "data"
-fasta_filename = 'prelim_capsids.fasta'
+# fasta_filename = 'prelim_capsids.fasta'
+fasta_filename = 'wildtypes.fasta'
 filepath = Path(folder) / Path(fasta_filename)
 sc = SequenceCollection(filepath)
 

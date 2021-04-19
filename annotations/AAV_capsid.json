@@ -1,0 +1,131 @@
+{
+"annotations":
+[{
+    "name": "F129L",
+    "AA_start":129,
+    "AA_end":129,
+    "DNA_start":385,
+    "DNA_end":387,
+    "notes":"Designation AAV6 to AAV 6.2, 6.2 has greater tropism in some cell types"
+},
+{
+    "name":"Surface Exposed Tyrosine",
+    "AA_start":445,
+    "AA_end":445,
+    "DNA_start":1333,
+    "DNA_end":1335,
+    "notes":"Shown to alter tropism"
+},
+{
+    "name":"Surface Serine",
+    "AA_start":663,
+    "AA_end":663,
+    "DNA_start":1987,
+    "DNA_end":1989,
+    "notes":"Shown to alter tropism"
+},
+{
+    "name":"Surface Exposed Tyrosine",
+    "AA_start":731,
+    "AA_end":731,
+    "DNA_start":2191,
+    "DNA_end":2193,
+    "notes":"Shown to alter tropism"
+},
+{
+    "name":"Heparin binding",
+    "AA_start":531,
+    "AA_end":531,
+    "DNA_start":1591,
+    "DNA_end":1593,
+    "notes":"Involved in heparin binding/tropism"
+},
+{
+    "name":"AAV I587 homolog",
+    "AA_start":585,
+    "AA_end":586,
+    "DNA_start":1755,
+    "DNA_end":1756,
+    "notes":"Homolog to AAV2 I587 peptide insertion site"
+},
+{
+    "name":"Surface lysine",
+    "AA_start":492,
+    "AA_end":492,
+    "DNA_start":1474,
+    "DNA_end":1476,
+    "notes":"Surface exposed lysine"
+},
+{
+    "name":"Variable Region 1",
+    "AA_start":253,
+    "AA_end":271,
+    "DNA_start":757,
+    "DNA_end":813,
+    "notes": ""
+},
+{
+    "name":"Variable Region 2",
+    "AA_start":381,
+    "AA_end":386,
+    "DNA_start":1141,
+    "DNA_end":1158,
+    "notes": ""
+},
+{
+    "name":"Variable Region 3",
+    "AA_start":450,
+    "AA_end":466,
+    "DNA_start":1348,
+    "DNA_end":1398,
+    "notes": ""
+},
+{
+    "name":"Variable Region 4",
+    "AA_start":490,
+    "AA_end":515,
+    "DNA_start":1468,
+    "DNA_end":1545,
+    "notes": ""
+},
+{
+    "name":"Variable Region 5",
+    "AA_start":527,
+    "AA_end":532,
+    "DNA_start":1579,
+    "DNA_end":1596,
+    "notes": ""
+},
+{
+    "name":"Variable Region 6",
+    "AA_start":544,
+    "AA_end":557,
+    "DNA_start":1630,
+    "DNA_end":1671,
+    "notes": ""
+},
+{
+    "name":"Variable Region 7",
+    "AA_start":582,
+    "AA_end":597,
+    "DNA_start":1744,
+    "DNA_end":1791,
+    "notes": ""
+},
+{
+    "name":"Variable Region 8",
+    "AA_start":659,
+    "AA_end":669,
+    "DNA_start":1975,
+    "DNA_end":2007,
+    "notes": ""
+},
+{
+    "name":"Variable Region 9",
+    "AA_start":704,
+    "AA_end":720,
+    "DNA_start":2125,
+    "DNA_end":2160,
+    "notes": ""
+}]
+}
