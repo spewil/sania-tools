@@ -3,7 +3,7 @@ import xml.etree.ElementTree as et
 from Bio import SeqIO, SeqUtils, Data
 from pathlib import Path
 
-base_pairs = ["-", "N", "W", "A", "T", "C", "G"]
+base_pairs = ["-", "A", "T", "C", "G", "N", "W"]
 null_val = 9
 
 
@@ -12,7 +12,7 @@ def construct_numerization_dict():
         mapping from base pairs to numbers
     """
     numerization_dict = {}
-    numerization_array = np.arange(len(base_pairs))
+    numerization_array = np.arange(len(base_pairs), dtype=np.float)
     for i, bp in enumerate(base_pairs):
         numerization_dict[bp] = numerization_array[i]
     return numerization_dict
@@ -64,6 +64,7 @@ class SequenceCollection():
             seq_dict = SeqIO.to_dict(SeqIO.parse(handle, "fasta"))
         # collect sequences
         for id in seq_dict.keys():
+            print(id)
             sequence = Sequence(id, seq_dict[id])
             if "CAP" in id:
                 # sequence is reference AAV
@@ -158,8 +159,8 @@ def load_from_xml(filepath):
 
 # folder = '/Users/spencerw/Dropbox (UCL)/Murray Lab/Geneious/Alba data example/'
 folder = "data"
-# fasta_filename = 'prelim_capsids.fasta'
-fasta_filename = 'wildtypes.fasta'
+fasta_filename = 'prelim_capsids.fasta'
+# fasta_filename = 'wildtypes.fasta'
 filepath = Path(folder) / Path(fasta_filename)
 sc = SequenceCollection(filepath)
 

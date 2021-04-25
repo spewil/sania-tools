@@ -57,75 +57,75 @@
     "notes":"Surface exposed lysine"
 },
 {
-    "name":"Variable Region 1",
+    "name":"VR 1",
     "AA_start":253,
     "AA_end":271,
     "DNA_start":757,
     "DNA_end":813,
-    "notes": ""
+    "notes": "Variable Region"
 },
 {
-    "name":"Variable Region 2",
+    "name":"VR 2",
     "AA_start":381,
     "AA_end":386,
     "DNA_start":1141,
     "DNA_end":1158,
-    "notes": ""
+    "notes": "Variable Region"
 },
 {
-    "name":"Variable Region 3",
+    "name":"VR 3",
     "AA_start":450,
     "AA_end":466,
     "DNA_start":1348,
     "DNA_end":1398,
-    "notes": ""
+    "notes": "Variable Region"
 },
 {
-    "name":"Variable Region 4",
+    "name":"VR 4",
     "AA_start":490,
     "AA_end":515,
     "DNA_start":1468,
     "DNA_end":1545,
-    "notes": ""
+    "notes": "Variable Region"
 },
 {
-    "name":"Variable Region 5",
+    "name":"VR 5",
     "AA_start":527,
     "AA_end":532,
     "DNA_start":1579,
     "DNA_end":1596,
-    "notes": ""
+    "notes": "Variable Region"
 },
 {
-    "name":"Variable Region 6",
+    "name":"VR 6",
     "AA_start":544,
     "AA_end":557,
     "DNA_start":1630,
     "DNA_end":1671,
-    "notes": ""
+    "notes": "Variable Region"
 },
 {
-    "name":"Variable Region 7",
+    "name":"VR 7",
     "AA_start":582,
     "AA_end":597,
     "DNA_start":1744,
     "DNA_end":1791,
-    "notes": ""
+    "notes": "Variable Region"
 },
 {
-    "name":"Variable Region 8",
+    "name":"VR 8",
     "AA_start":659,
     "AA_end":669,
     "DNA_start":1975,
     "DNA_end":2007,
-    "notes": ""
+    "notes": "Variable Region"
 },
 {
-    "name":"Variable Region 9",
+    "name":"VR 9",
     "AA_start":704,
     "AA_end":720,
     "DNA_start":2125,
     "DNA_end":2160,
-    "notes": ""
+    "notes": "Variable Region"
 }]
 }
